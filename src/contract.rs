@@ -50,12 +50,12 @@ pub const BLOCK_SIZE: usize = 256;
 pub const ID_BLOCK_SIZE: u32 = 64;
 
 ///Max number of tokens
-pub const MAX_TOKENS: u32 = 580;
+pub const MAX_TOKENS: u32 = 500;
 
 ///Mint cost per Anon
-pub const MINT_COST: u128 = 150000000; //150 sSCRT
+pub const MINT_COST: u128 = 20000000; //20 sSCRT
 
-pub const CHAIN_ID: &str = "secret-3"; //chain id
+pub const CHAIN_ID: &str = "secret-4"; //chain id
 
 
 
@@ -620,11 +620,7 @@ pub fn mint<S: Storage, A: Api, Q: Querier>(
         Some(c) => c,
         None => 0
     };
-    if mint_num >= 3 {
-        return Err(StdError::generic_err(
-            "You have reached your mint limit of 3 Anons",
-        ))
-    }
+    
     mint_num = mint_num+1;
     save(&mut deps.storage, &the_owner.as_str().as_bytes(), &mint_num)?;
 
@@ -2072,7 +2068,7 @@ pub fn query_royalty<S: Storage, A: Api, Q: Querier>(
         let block: BlockInfo = may_load(&deps.storage, BLOCK_KEY)?.unwrap_or_else(|| BlockInfo {
             height: 1,
             time: 1,
-            chain_id: "secret-3".to_string(),
+            chain_id: "secret-4".to_string(),
         });
         // if the token id was found
         if let Ok((token, idx)) = get_token(&deps.storage, id, None) {
