@@ -1,4 +1,4 @@
-SECRETCLI = docker exec -it secretdev /usr/bin/secretcli
+SECRETCLI = docker exec -it secretdev /usr/local/bin/secretcli
 
 .PHONY: all
 all: clippy test
