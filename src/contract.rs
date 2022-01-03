@@ -50,10 +50,10 @@ pub const BLOCK_SIZE: usize = 256;
 pub const ID_BLOCK_SIZE: u32 = 64;
 
 ///Max number of tokens
-pub const MAX_TOKENS: u32 = 500;
+pub const MAX_TOKENS: u32 = 100;
 
 ///Mint cost per Anon
-pub const MINT_COST: u128 = 20000000; //20 sSCRT
+pub const MINT_COST: u128 = 5000000; //5 sSCRT
 
 pub const CHAIN_ID: &str = "secret-4"; //chain id
 
@@ -102,8 +102,8 @@ pub fn init<S: Storage, A: Api, Q: Querier>(
         owner_is_public: init_config.public_owner.unwrap_or(false),
         sealed_metadata_is_enabled: init_config.enable_sealed_metadata.unwrap_or(false),
         unwrap_to_private: init_config.unwrapped_metadata_is_private.unwrap_or(false),
-        minter_may_update_metadata: init_config.minter_may_update_metadata.unwrap_or(true),
-        owner_may_update_metadata: init_config.owner_may_update_metadata.unwrap_or(true),
+        minter_may_update_metadata: init_config.minter_may_update_metadata.unwrap_or(false),
+        owner_may_update_metadata: init_config.owner_may_update_metadata.unwrap_or(false),
         burn_is_enabled: init_config.enable_burn.unwrap_or(false),
     };
 
@@ -509,7 +509,7 @@ pub fn receive<S: Storage, A: Api, Q: Querier>(
 
     if amount.u128() != MINT_COST {
         return Err(StdError::generic_err(
-            "You should send 150 sSCRT",
+            "You should send 5 sSCRT",
         ));
     }
 
@@ -581,7 +581,7 @@ pub fn mint<S: Storage, A: Api, Q: Querier>(
     //Does not let minting occur above 580 tokens
     if config.token_cnt >= MAX_TOKENS {
         return Err(StdError::generic_err(
-            "There are only 580 tokens in this collection",
+            "There are only 100 tokens in this collection",
         ))
     }
 
@@ -682,7 +682,7 @@ pub fn mint<S: Storage, A: Api, Q: Querier>(
             external_url: None,
             description: None,
             name: token_id.clone(),
-            attributes:token_data_list[num].attributes.clone(),
+            attributes: None,
             background_color: None,
             animation_url: None,
             youtube_url: None,
@@ -706,11 +706,18 @@ pub fn mint<S: Storage, A: Api, Q: Querier>(
             external_url: None,
             description: None,
             name: memo.clone(),
-            attributes: None,
+            attributes: token_data_list[num].attributes.clone(),
             background_color: None,
             animation_url: None,
             youtube_url: None,
-            media: None,
+            media: Some(vec![
+                MediaFile {
+                    file_type: Some("image".to_string()),
+                    extension: Some("png".to_string()),
+                    url: token_data_list[num].priv_img_url.clone(),
+                    authentication: None
+                }
+            ]),
             protected_attributes: None
         })
     });

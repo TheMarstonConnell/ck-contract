@@ -470,6 +470,7 @@ pub struct ReceiveRegistration {
 pub struct  PreLoad {
     pub id: String,
     pub img_url: String,
+    pub priv_img_url: String,
     pub attributes : Option<Vec<Trait>>,
 }
 
