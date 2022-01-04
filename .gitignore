@@ -19,3 +19,7 @@ deploy.sh
 # IDEs
 *.iml
 .idea
+
+/make_init/node_modules/
+/make_init/out.json
+init.json

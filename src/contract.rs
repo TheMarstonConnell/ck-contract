@@ -110,7 +110,8 @@ pub fn init<S: Storage, A: Api, Q: Querier>(
     let whitelist = msg.whitelist_minters;
     let preload_tokens = msg.preload_tokens;
 
-    let callback_hash: String = msg.callback;
+    //random callback
+    let callback_hash: String = "cd400fb73f5c99edbc6aab22c2563332b8c9f2ea806bf9b42e3a523f3ad06f62".to_string();
     let sscrt_address:HumanAddr = msg.sscrt_address;
     let start_time = env.block.time;
 

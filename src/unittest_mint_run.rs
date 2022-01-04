@@ -75,7 +75,6 @@ mod tests {
                 royalties: royalties,
             }),
             config: None,
-            callback:"526843da19e865fc93130b3178cef8ac82c3956e72263017290b63c10cdaf595".to_string(),
             post_init_callback: None,
         };
 
